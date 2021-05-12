@@ -13,7 +13,23 @@ class ZohoAPIController extends Controller
      * @throws \Exception
      */
     public function createAccount(){
-        $response = Http::withToken(cache('access_token'))->get(env('API_DOMAIN') . '/crm/v2/settings/modules');
+        $response = Http::withToken(cache('access_token'))
+            ->get(env('API_DOMAIN') . '/crm/v2/users');
+        $owner_id = $response->json('users')[0]['id'];
+        $response = Http::withToken(cache('access_token'))->post(env('API_DOMAIN') . '/crm/v2/Accounts', ['data'=>[
+            'Owner'=>['id'=>$owner_id],
+            'Parent_Account'=>null,
+            'Account_Name'=>'Test account'
+            ]
+        ]);
+        dd($response->json());
+    }
+
+    public function createCampaign(){
+        $response = Http::withToken(cache('access_token'))->asJson()->post(env('API_DOMAIN') . '/crm/v2/Campaigns', ['data'=>[
+            'Campaign_Name'=>'test'
+            ]
+        ]);
         dd($response->json());
     }
 

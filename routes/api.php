@@ -17,3 +17,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/make-account', [ZohoAPIController::class,'createAccount']);
 Route::get('/create-auth-token/{code?}',[ZohoAPIController::class,'createAuthToken']);
+Route::get('/create-campaign',[ZohoAPIController::class,'createCampaign']);
